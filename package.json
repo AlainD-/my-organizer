@@ -9,6 +9,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "firebase": "^9.12.1",
     "lodash": "4.17.21",
     "primeflex": "^3.2.1",
     "primeicons": "^6.0.1",
