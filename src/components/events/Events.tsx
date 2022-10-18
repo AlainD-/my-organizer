@@ -12,7 +12,7 @@ interface OrganizerEvent {
   color: string;
 }
 
-export default function Events() {
+export default function Events({displayMode}: {displayMode: 'compact'|'large'}) {
   const [events, setEvents] = useState<OrganizerEvent[]>();
 
   const customizedMarker: TimelineTemplateType = (event: OrganizerEvent) => {
@@ -42,7 +42,21 @@ export default function Events() {
 
   return (
     <div>
-      <Timeline value={events} align="alternate" className="customized-timeline" marker={customizedMarker} content={customizedContent} />
+      {displayMode === 'compact' ? (
+        <Timeline
+          value={events}
+          opposite={(event) => event.date}
+          content={(event) => <span><small className="p-text-secondary">{event.title}</small>: {event.description}</span>}
+        />
+      ) : (
+        <Timeline
+          value={events}
+          align="alternate"
+          className="customized-timeline"
+          marker={customizedMarker}
+          content={customizedContent}
+        />
+      )}
     </div>
   );
 };

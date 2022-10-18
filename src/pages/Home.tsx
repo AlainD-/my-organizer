@@ -8,7 +8,6 @@ export default function Home() {
   const [message, setMessage] = useState<string>('');
 
   const handleSubmit = async () => {
-    console.log({message});
     try {
       const docRef = await addDoc(collection(firestore, "messages"), {
         message

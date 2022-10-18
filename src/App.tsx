@@ -1,11 +1,11 @@
-import Events from './pages/Events';
+import EventsPage from './pages/EventsPage';
 import Home from './pages/Home';
 
 export default function App() {
   return (
     <div>
       <Home />
-      <Events />
+      <EventsPage />
     </div>
   );
 };
