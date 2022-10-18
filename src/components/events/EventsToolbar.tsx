@@ -2,6 +2,7 @@ import { SelectButton } from 'primereact/selectbutton';
 import { SelectItem } from 'primereact/selectitem';
 import { Toolbar, ToolbarTemplateType } from 'primereact/toolbar';
 import { ReactNode, useState } from 'react';
+import NewEventAction from './NewEventAction';
 
 export default function EventsToolbar({onDisplayModeChanged}: {onDisplayModeChanged: (mode: 'compact' | 'large') => void}) {
   const [displayMode, setDisplayMode] = useState<'compact'|'large'>('large');
@@ -20,7 +21,11 @@ export default function EventsToolbar({onDisplayModeChanged}: {onDisplayModeChan
     return <i className={option.icon as string}></i>;
   };
 
-  const leftContent: ToolbarTemplateType = <></>;
+  const leftContent: ToolbarTemplateType = (
+    <>
+      <NewEventAction />
+    </>
+  );
 
   const rightContent: ToolbarTemplateType = (
     <>

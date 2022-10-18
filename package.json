@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "firebase": "^9.12.1",
-    "lodash": "4.17.21",
+    "formik": "^2.2.9",
+    "lodash": "^4.17.21",
     "primeflex": "^3.2.1",
     "primeicons": "^6.0.1",
     "primereact": "^8.6.1",
@@ -18,7 +19,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
-    "react-transition-group": "4.4.5",
+    "react-transition-group": "^4.4.5",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
@@ -31,7 +32,7 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/react-router-dom": "^5.3.3",
-    "env-cmd": "10.1.0",
+    "env-cmd": "^10.1.0",
     "typescript": "^4.8.4"
   },
   "eslintConfig": {

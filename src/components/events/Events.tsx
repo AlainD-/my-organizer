@@ -34,9 +34,14 @@ export default function Events({displayMode}: {displayMode: 'compact'|'large'}) 
 
   useEffect(() => {
     setEvents(() => ([
-      { title: 'Processing', date: '15/10/2020 14:00', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', icon: 'pi pi-cog', color: '#673AB7' },
-      { title: 'Shipped', date: '15/10/2020 16:15', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', icon: 'pi pi-shopping-cart', color: '#FF9800' },
-      { title: 'Delivered', date: '16/10/2020 10:00', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', icon: 'pi pi-check', color: '#607D8B' },
+      { title: 'Processing', date: '15/10/2020 14:00', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', icon: 'pi pi-calendar', color: '#673AB7' },
+      { title: 'Shipped', date: '15/10/2020 16:15', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', icon: 'pi pi-building', color: '#FF9800' },
+      { title: 'Delivered', date: '16/10/2020 10:00', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', icon: 'pi pi-file-edit', color: '#607D8B' },
+      { title: 'Delivered', date: '16/10/2020 10:00', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', icon: 'pi pi-envelope', color: '#607D8B' },
+      { title: 'Shipped', date: '15/10/2020 16:15', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', icon: 'pi pi-at', color: '#FF9800' },
+      { title: 'Processing', date: '15/10/2020 14:00', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', icon: 'pi pi-home', color: '#673AB7' },
+      { title: 'Processing', date: '15/10/2020 14:00', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', icon: 'pi pi-phone', color: '#673AB7' },
+      { title: 'Delivered', date: '16/10/2020 10:00', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.', icon: 'pi pi-mobile', color: '#607D8B' },
     ]));
   }, []);
 
