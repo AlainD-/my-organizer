@@ -171,14 +171,15 @@ export default function NewEventDialog({isVisible, onHide}: {isVisible: boolean,
                   const iconClass = formik.values.icon ?? 'pi pi-question';
                   const icon: ReactNode = <i className={iconClass}></i>;
                   return (
-                    <div key={colour} className="flex flex-column justify-content-start align-items-center mr-2">
+                    <div key={colour} className="flex flex-column justify-content-start align-items-center mr-1 relative">
                       <Button
+                        type="button"
                         icon={icon}
-                        className="p-button-rounded mb-1"
+                        className="p-button-rounded mt-2 mr-1"
                         style={{backgroundColor: `#${colour}`}}
                         onClick={() => setSelectedColour(() => colour)}
                       />
-                      {isSelected && <span className="selected-colour"><i className="pi pi-check"></i></span>}
+                      {isSelected && <span className="selected-colour absolute top-0 right-0"><i className="pi pi-check" style={{fontSize: '0.5rem'}}></i></span>}
                     </div>
                   );
                 })}
