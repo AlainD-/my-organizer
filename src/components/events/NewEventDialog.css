@@ -1,0 +1,10 @@
+.selected-colour {
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  background-color: #689F38;
+  color: #ffffff;
+  border-radius: 50%;
+}

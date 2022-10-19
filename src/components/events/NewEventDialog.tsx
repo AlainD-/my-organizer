@@ -2,13 +2,13 @@ import { addDoc, collection } from 'firebase/firestore';
 import { useFormik } from 'formik';
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
-import { ColorPicker } from 'primereact/colorpicker';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import { ReactNode, useState } from 'react';
 import { firestore } from '../../startup/firebase';
+import './NewEventDialog.css';
 
 interface EventFormData {
   title: string;
@@ -22,8 +22,8 @@ const INITIAL_DATA: EventFormData = {
   title: '',
   date: undefined,
   description: '',
-  icon: '',
-  colour: '',
+  icon: 'pi pi-calendar',
+  colour: '673AB7',
 };
 
 const ICONS: string[] = [
@@ -37,8 +37,14 @@ const ICONS: string[] = [
   'pi pi-mobile',
 ];
 
+const COLOURS: string[] = [
+  '673AB7',
+  'FF9800',
+  '607D8B'
+];
+
 export default function NewEventDialog({isVisible, onHide}: {isVisible: boolean, onHide: () => void}) {
-  const [formData, setFormData] = useState<EventFormData>(INITIAL_DATA);
+  const [selectedColour, setSelectedColour] = useState<string>('');
 
   const formik = useFormik<EventFormData>({
     initialValues: INITIAL_DATA,
@@ -61,14 +67,15 @@ export default function NewEventDialog({isVisible, onHide}: {isVisible: boolean,
         errors.icon = 'Icon is required.';
       }
 
-      if (!data.colour) {
+      if (!selectedColour) {
         errors.colour = 'Colour is required.';
       }
 
       return errors;
     },
-    onSubmit: async (event: EventFormData) => {
-      setFormData(event);
+    onSubmit: async (formData: EventFormData) => {
+      const {date, title, description, icon} = formData;
+      const event = {title, date, description, icon, colour: selectedColour};
 
       try {
         const docRef = await addDoc(collection(firestore, 'events'), event);
@@ -158,9 +165,23 @@ export default function NewEventDialog({isVisible, onHide}: {isVisible: boolean,
             </div>
 
             <div className="field">
-              <span className="p-float-label">
-                <ColorPicker id="colour" name="colour" value={formik.values.colour} onChange={formik.handleChange} className={classNames({ 'p-invalid': isFormFieldValid('colour') })} />
-                <label htmlFor="colour" className={classNames({ 'p-error': isFormFieldValid('colour') })}>Colour*</label>
+              <span className="p-float-label flex">
+                {COLOURS.map((colour) => {
+                  const isSelected = selectedColour === colour;
+                  const iconClass = formik.values.icon ?? 'pi pi-question';
+                  const icon: ReactNode = <i className={iconClass}></i>;
+                  return (
+                    <div key={colour} className="flex flex-column justify-content-start align-items-center mr-2">
+                      <Button
+                        icon={icon}
+                        className="p-button-rounded mb-1"
+                        style={{backgroundColor: `#${colour}`}}
+                        onClick={() => setSelectedColour(() => colour)}
+                      />
+                      {isSelected && <span className="selected-colour"><i className="pi pi-check"></i></span>}
+                    </div>
+                  );
+                })}
               </span>
               {getFormErrorMessage('colour')}
             </div>
