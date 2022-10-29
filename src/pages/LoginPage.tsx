@@ -9,16 +9,16 @@ export default function LoginPage() {
 
   const handleLogin = async() => {
     try {
-      console.log({m:'debug', o:'let us debugg'});
+      console.log(JSON.stringify({m:'debug', o:'let us debugg'}));
       await logIn();
     } catch (error: any) {
-      console.log({error});
+      console.log(JSON.stringify({error}));
     }
   };
 
   useEffect(() => {
     if (user) {
-      console.log({m:'debug', o:'can we navigate', user});
+      console.log(JSON.stringify({m:'debug', o:'can we navigate', user}));
       navigate('/events');
     }
   }, [navigate, user]);
