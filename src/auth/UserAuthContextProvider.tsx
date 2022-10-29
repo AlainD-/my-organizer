@@ -1,4 +1,4 @@
-import { getRedirectResult, GoogleAuthProvider, OAuthCredential, onAuthStateChanged, signInWithRedirect, signOut, Unsubscribe, User, UserCredential } from 'firebase/auth';
+import { getRedirectResult, onAuthStateChanged, signInWithRedirect, signOut, Unsubscribe, User, UserCredential } from 'firebase/auth';
 import { ReactNode, useEffect, useState } from 'react';
 import { auth } from '../startup/firebase';
 import { userAuthContext } from './context/user-auth.context';
