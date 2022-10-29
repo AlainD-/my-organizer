@@ -14,13 +14,13 @@ export default function UserAuthContextProvider({children}: {children: ReactNode
       // This will trigger a full page redirect away from your app
       // After returning from the redirect when your app initializes you can obtain the result
       const result: UserCredential | null = await getRedirectResult(auth);
-      if (result) {
-        // This gives you a Google Access Token.
-        const credential: OAuthCredential | null = GoogleAuthProvider.credentialFromResult(result);
-        const token: string | undefined = credential?.accessToken;
-        // This is the signed-in user
-        const user: User = result.user;
-      }
+      // if (result) {
+      //   // This gives you a Google Access Token.
+      //   const credential: OAuthCredential | null = GoogleAuthProvider.credentialFromResult(result);
+      //   const token: string | undefined = credential?.accessToken;
+      //   // This is the signed-in user
+      //   const user: User = result.user;
+      // }
 
       return result;
     } catch (error: any) {
