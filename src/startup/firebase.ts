@@ -1,4 +1,5 @@
 import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app';
+import { Auth, getAuth } from 'firebase/auth';
 import { Firestore, getFirestore } from 'firebase/firestore';
 
 const firebaseConfig: FirebaseOptions = {
@@ -14,3 +15,4 @@ const firebaseConfig: FirebaseOptions = {
 const app: FirebaseApp = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 export const firestore: Firestore = getFirestore(app);
+export const auth: Auth = getAuth(app);

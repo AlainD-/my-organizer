@@ -2,6 +2,8 @@ import { SelectButton } from 'primereact/selectbutton';
 import { SelectItem } from 'primereact/selectitem';
 import { Toolbar, ToolbarTemplateType } from 'primereact/toolbar';
 import { ReactNode, useState } from 'react';
+import CurrentUser from '../../auth/components/CurrentUser';
+import Logout from '../../auth/components/Logout';
 import NewEventAction from './NewEventAction';
 
 export default function EventsToolbar({onDisplayModeChanged}: {onDisplayModeChanged: (mode: 'compact' | 'large') => void}) {
@@ -35,7 +37,10 @@ export default function EventsToolbar({onDisplayModeChanged}: {onDisplayModeChan
         onChange={(e) => handleDisplayModeChanged(e.value)}
         itemTemplate={displayModeTemplate}
         optionLabel="value"
+        className="mr-2"
       />
+      <CurrentUser />
+      <Logout />
     </>
   );
 
