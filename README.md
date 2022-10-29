@@ -1,3 +1,11 @@
+# My Organizer
+
+[![CircleCI](https://circleci.com/gh/AlainD-/my-organizer/tree/master.svg?style=svg)](https://circleci.com/gh/AlainD-/my-organizer/tree/master)
+
+## Authors
+
+- **Alain D'EURVEILHER** - _Initial work_ - [AlainD.](https://github.com/AlainD-)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
