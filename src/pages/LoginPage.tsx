@@ -10,7 +10,8 @@ export default function LoginPage() {
   const handleLogin = async() => {
     try {
       console.log(JSON.stringify({m:'debug', o:'let us debugg'}));
-      await logIn();
+      const userCredential = await logIn();
+      console.log(JSON.stringify({m:'debug', o:'login finished', userCredential}));
     } catch (error: any) {
       console.log(JSON.stringify({error}));
     }

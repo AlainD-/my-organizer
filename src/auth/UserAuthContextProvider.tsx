@@ -9,8 +9,11 @@ export default function UserAuthContextProvider({children}: {children: ReactNode
 
   const logIn = async (): Promise<UserCredential | null> => {
     try {
+
+      console.log(JSON.stringify({m:'debug', o:'start login...'}));
       // Start a sign in process for an unauthenticated user.
       await signInWithRedirect(auth, googleProvider);
+      console.log(JSON.stringify({m:'debug', o:'after signInWithRedirect...'}));
       // This will trigger a full page redirect away from your app
       // After returning from the redirect when your app initializes you can obtain the result
       const result: UserCredential | null = await getRedirectResult(auth);
