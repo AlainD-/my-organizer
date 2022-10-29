@@ -1,0 +1,77 @@
+version: 2.1
+orbs:
+  # orgs contain basc recipes and reproducible actions (install node, aws, etc.)
+  node: circleci/node@5.0.0
+  browser-tools: circleci/browser-tools@1.2.4
+  # aws-s3: circleci/aws-s3@3.0.0
+  # different jobs are called later in the workflows sections
+jobs:
+  build:
+    docker:
+      # the base image can run most needed actions with orbs
+      - image: cimg/node:lts
+    steps:
+      - node/install
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: npm i
+      - run:
+          name: Build
+          command: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+  test:
+    docker:
+      - image: cimg/node:lts-browsers
+    steps:
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
+      - node/install
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: npm i
+      - run:
+          name: Unit Tests
+          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+  # lint:
+  #   docker:
+  #     - image: cimg/node:lts
+  #   steps:
+  #     - node/install
+  #     - checkout
+  #     - run:
+  #         name: Install Dependencies
+  #         command: npm i
+  #     - run:
+  #         name: Linting
+  #         command: npm run lint
+  # deploy:
+  #   docker:
+  #     - image: cimg/node:lts
+  #   steps:
+  #     - attach_workspace:
+  #         at: ./
+  #     - aws-s3/copy:
+  #         from: ./dist/my-store
+  #         to: 's3://my-store-alaind/'
+  #         arguments: '--recursive'
+# Orchestrate our job run sequence
+workflows:
+  build_test_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
+      - test
+      # - lint
+      # - deploy:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires:
+      #       - build
