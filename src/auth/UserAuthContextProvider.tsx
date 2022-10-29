@@ -21,9 +21,11 @@ export default function UserAuthContextProvider({children}: {children: ReactNode
       //   // This is the signed-in user
       //   const user: User = result.user;
       // }
+      console.log({m:'debug', result});
 
       return result;
     } catch (error: any) {
+      console.log({error});
       throw error;
     }
   };

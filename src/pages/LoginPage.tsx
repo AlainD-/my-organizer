@@ -9,6 +9,7 @@ export default function LoginPage() {
 
   const handleLogin = async() => {
     try {
+      console.log({m:'debug', o:'let us debugg'});
       await logIn();
     } catch (error: any) {
       console.log({error});
@@ -17,6 +18,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user) {
+      console.log({m:'debug', o:'can we navigate', user});
       navigate('/events');
     }
   }, [navigate, user]);
