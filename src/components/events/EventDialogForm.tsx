@@ -89,7 +89,7 @@ export default function EventDialogForm({isVisible, onHide, organizerEvent}: {is
   const footer = (
     <div className="mt-1 pt-2 border-none border-top-1 border-dashed border-blue-500">
         <Button label="Cancel" icon="pi pi-times" onClick={resetAndHide} className="p-button-text p-button-secondary p-button-sm" />
-        <Button label={organizerEvent ? 'Update' : 'Create'} icon="pi pi-check" onClick={handleSubmit} className="p-button-sm" autoFocus={true} />
+        <Button label={organizerEvent ? 'Update' : 'Create'} icon="pi pi-check" onClick={handleSubmit} className="p-button-sm" />
     </div>
   );
 
