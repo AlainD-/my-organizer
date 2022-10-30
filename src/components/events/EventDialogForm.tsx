@@ -76,9 +76,9 @@ export default function EventDialogForm({isVisible, onHide, organizerEvent}: {is
 
   const isFormFieldValid = (field: keyof EventFormData): boolean => !!(formik.touched[field] && formik.errors[field]);
 
-  const getFormErrorMessage = (field: keyof EventFormData): ReactNode => {
-    return isFormFieldValid(field) && <small className="p-error">{formik.errors[field]}</small>;
-  }
+  const getFormErrorMessage = (field: keyof EventFormData): ReactNode => (
+    <>{isFormFieldValid(field) && <small id={`${field}-help`} className="block p-error">{formik.errors[field]}</small>}</>
+  );
 
   const handleSubmit = (): void => {
     formik.submitForm();
@@ -87,9 +87,9 @@ export default function EventDialogForm({isVisible, onHide, organizerEvent}: {is
   const header: string = `${organizerEvent ? 'Update' : 'New'} Event`;
 
   const footer = (
-    <div>
-        <Button label="Cancel" icon="pi pi-times" onClick={resetAndHide} className="p-button-text" />
-        <Button label={organizerEvent ? 'Update' : 'Create'} icon="pi pi-check" onClick={handleSubmit} autoFocus />
+    <div className="mt-1 pt-2 border-none border-top-1 border-dashed border-blue-500">
+        <Button label="Cancel" icon="pi pi-times" onClick={resetAndHide} className="p-button-text p-button-secondary p-button-sm" />
+        <Button label={organizerEvent ? 'Update' : 'Create'} icon="pi pi-check" onClick={handleSubmit} className="p-button-sm" autoFocus={true} />
     </div>
   );
 
@@ -98,85 +98,78 @@ export default function EventDialogForm({isVisible, onHide, organizerEvent}: {is
       <Dialog
         header={header}
         visible={isVisible}
-        style={{ width: '30rem' }}
+        style={{ width: '30rem', maxWidth: '100vw' }}
         footer={footer}
         onHide={resetAndHide}
       >
-        {error && <ErrorMessage detail={error} />}
-        <div className="flex justify-content-center mt-4">
-          <form onSubmit={formik.handleSubmit} className="p-fluid">
-            <div className="field">
-              <span className="p-float-label">
-                <InputText id="title" name="title" value={formik.values.title} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid('title') })} />
-                <label htmlFor="title" className={classNames({ 'p-error': isFormFieldValid('title') })}>Title*</label>
-              </span>
-              {getFormErrorMessage('title')}
-            </div>
+        <div className="w-100">
+          {error && <ErrorMessage detail={error} />}
+          <div className="flex justify-content-center mt-4">
+            <form onSubmit={formik.handleSubmit} className="p-fluid w-full">
+              <div className="field">
+                <InputText id="title" name="title" value={formik.values.title} onChange={formik.handleChange} autoFocus className={classNames({'block': true, 'p-invalid': isFormFieldValid('title') })} placeholder="Title" />
+                {getFormErrorMessage('title')}
+              </div>
 
-            <div className="field">
-              <span className="p-float-label">
-                <Calendar id="date" name="date" value={formik.values.date} onChange={formik.handleChange} dateFormat="dd/mm/yy" mask="99/99/9999" showIcon showTime className={classNames({ 'p-invalid': isFormFieldValid('date') })}/>
-                <label htmlFor="date" className={classNames({ 'p-error': isFormFieldValid('date') })}>Date*</label>
-              </span>
-              {getFormErrorMessage('date')}
-            </div>
+              <div className="field">
+                <Calendar id="date" name="date" value={formik.values.date} onChange={formik.handleChange} dateFormat="dd/mm/yy" mask="99/99/9999" showIcon showTime className={classNames({ 'p-invalid': isFormFieldValid('date') })} placeholder="Date" />
+                {getFormErrorMessage('date')}
+              </div>
 
-            <div className="field">
-              <span className="p-float-label">
-                <InputTextarea rows={2} cols={30} id="description" name="description" value={formik.values.description} onChange={formik.handleChange} className={classNames({ 'p-invalid': isFormFieldValid('description') })} autoResize={false} />
-                <label htmlFor="description" className={classNames({ 'p-error': isFormFieldValid('description') })}>Description*</label>
-              </span>
-              {getFormErrorMessage('description')}
-            </div>
+              <div className="field">
+                <InputTextarea rows={2} cols={30} id="description" name="description" value={formik.values.description} onChange={formik.handleChange} className={classNames({ 'p-invalid': isFormFieldValid('description') })} autoResize={false} placeholder="Description" />
+                {getFormErrorMessage('description')}
+              </div>
 
-            <div className="field">
-              <span className="flex flex-wrap">
-                {ICONS.map((icon) => {
-                  const key = icon.replace(' ', '');
-                  const isSelected = selectedIcon === icon;
-                  const withSelectionClass = isSelected ? 'shadow-5' : 'p-button-secondary';
-                  const buttonClass = `p-button-rounded p-button-outlined mt-2 mr-1 ${withSelectionClass}`;
-                  return (
-                    <div key={key} className="flex flex-column justify-content-start align-items-center mr-1 relative">
-                      <Button
-                        type="button"
-                        icon={icon}
-                        className={buttonClass}
-                        onClick={() => setSelectedIcon(() => icon)}
-                      />
-                      {isSelected && <span className="selected-colour absolute top-0 right-0"><i className="pi pi-check" style={{fontSize: '0.5rem'}}></i></span>}
-                    </div>
-                  );
-                })}
-              </span>
-              {getFormErrorMessage('icon')}
-            </div>
+              <div className="field">
+                <span className="flex flex-wrap">
+                  {ICONS.map((icon) => {
+                    const key = icon.replace(' ', '');
+                    const isSelected = selectedIcon === icon;
+                    const withSelectionClass = isSelected ? 'shadow-5' : 'p-button-secondary';
+                    const buttonClass = `p-button-rounded p-button-outlined mt-2 mr-1 ${withSelectionClass}`;
+                    return (
+                      <div key={key} className="flex flex-column justify-content-start align-items-center mr-1 relative">
+                        <Button
+                          type="button"
+                          icon={icon}
+                          className={buttonClass}
+                          onClick={() => setSelectedIcon(() => icon)}
+                        />
+                        {isSelected && <span className="selected-colour absolute top-0 right-0"><i className="pi pi-check" style={{fontSize: '0.5rem'}}></i></span>}
+                      </div>
+                    );
+                  })}
+                </span>
+                {getFormErrorMessage('icon')}
+              </div>
 
-            <div className="field">
-              <span className="flex">
-                {COLOURS.map((colour) => {
-                  const isSelected = selectedColour === colour;
-                  const iconClass = selectedIcon ?? 'pi pi-question';
-                  const icon: ReactNode = <i className={iconClass}></i>;
-                  const withRaisedClass = isSelected ? 'shadow-5' : '';
-                  const buttonClass = `p-button-rounded mt-2 mr-1 ${withRaisedClass}`;
-                  return (
-                    <div key={colour} className="flex flex-column justify-content-start align-items-center mr-1 relative">
-                      <Button
-                        type="button"
-                        icon={icon}
-                        className={buttonClass}
-                        style={{backgroundColor: `#${colour}`, border: 0}}
-                        onClick={() => setSelectedColour(() => colour)}
-                      />
-                      {isSelected && <span className="selected-colour absolute top-0 right-0"><i className="pi pi-check" style={{fontSize: '0.5rem'}}></i></span>}
-                    </div>
-                  );
-                })}
-              </span>
-              {getFormErrorMessage('colour')}
-            </div>
-          </form>
+              <div className="field">
+                <span className="flex flex-wrap">
+                  {COLOURS.map((colour) => {
+                    const isSelected = selectedColour === colour;
+                    const iconClass = selectedIcon ?? 'pi pi-question';
+                    const icon: ReactNode = <i className={iconClass}></i>;
+                    const withRaisedClass = isSelected ? 'shadow-5' : '';
+                    const buttonClass = `p-button-rounded mt-2 mr-1 ${withRaisedClass}`;
+                    return (
+                      <div key={colour} className="flex flex-column justify-content-start align-items-center mr-1 relative">
+                        <Button
+                          type="button"
+                          icon={icon}
+                          className={buttonClass}
+                          style={{backgroundColor: `#${colour}`, border: 0}}
+                          onClick={() => setSelectedColour(() => colour)}
+                        />
+                        {isSelected && <span className="selected-colour absolute top-0 right-0"><i className="pi pi-check" style={{fontSize: '0.5rem'}}></i></span>}
+                      </div>
+                    );
+                  })}
+                </span>
+                {getFormErrorMessage('colour')}
+              </div>
+            </form>
+          </div>
         </div>
       </Dialog>
     </>
