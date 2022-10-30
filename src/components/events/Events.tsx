@@ -1,15 +1,14 @@
-import { collection, DocumentData, onSnapshot, orderBy, query, QueryDocumentSnapshot, QuerySnapshot, Timestamp } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 import { Card } from 'primereact/card';
 import { ConfirmDialog } from 'primereact/confirmdialog';
 import { Timeline, TimelineTemplateType } from 'primereact/timeline';
-import { useEffect, useState } from 'react';
-import { firestore } from '../../startup/firebase';
 import { OrganizerEvent } from './models/organizer-event';
 import EventActions from './EventActions';
+import { useOrganizerEvents } from './hooks/use-organizer-events.hook';
 import './Events.css';
 
 export default function Events({displayMode}: {displayMode: 'compact'|'large'}) {
-  const [events, setEvents] = useState<OrganizerEvent[]>();
+  const { organizerEvents } = useOrganizerEvents();
 
   const customizedMarker: TimelineTemplateType = (event: OrganizerEvent) => {
     const backgroundColor: string = `#${event.colour.replace('#', '')}`;
@@ -40,22 +39,12 @@ export default function Events({displayMode}: {displayMode: 'compact'|'large'}) 
     );
   };
 
-  useEffect(() => {
-    const unsubscribe = onSnapshot<DocumentData>(query(collection(firestore, 'events'), orderBy('date', 'asc')), {includeMetadataChanges: true}, (querySnapshot: QuerySnapshot<DocumentData>) => {
-      const fetchedEvents: OrganizerEvent[] = querySnapshot.docs.map((doc: QueryDocumentSnapshot<DocumentData>) => ({id: doc.id, ...doc.data()} as OrganizerEvent));
-      setEvents(() => fetchedEvents);
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
 
   return (
     <div>
       {displayMode === 'compact' ? (
         <Timeline
-          value={events}
+          value={organizerEvents}
           opposite={(organizerEvent: OrganizerEvent) => formatDate(organizerEvent.date)}
           content={(organizerEvent: OrganizerEvent) => (
             <div className="flex align-items-start justify-content-start">
@@ -69,7 +58,7 @@ export default function Events({displayMode}: {displayMode: 'compact'|'large'}) 
         />
       ) : (
         <Timeline
-          value={events}
+          value={organizerEvents}
           align="alternate"
           className="customized-timeline"
           marker={customizedMarker}
