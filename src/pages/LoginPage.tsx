@@ -1,33 +1,33 @@
-import { Button } from 'primereact/button';
-import { useEffect } from 'react';
+import { MouseEvent as ReactMouseEvent , useState } from 'react';
+import GoogleButton from 'react-google-button'
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../auth/hooks/use-user-auth.hook';
+import ErrorMessage from '../components/errors/ErrorMessage';
 
 export default function LoginPage() {
-  const { logIn, user } = useUserAuth();
+  const [error, setError] = useState<string>('');
+  const { logIn } = useUserAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async() => {
+  const handleGoogleSignIn = async (event: ReactMouseEvent<HTMLDivElement, MouseEvent>): Promise<void> => {
+    event.preventDefault();
     try {
-      console.log(JSON.stringify({m:'debug', o:'let us debugg'}));
-      const userCredential = await logIn();
-      console.log(JSON.stringify({m:'debug', o:'login finished', userCredential}));
+      await logIn();
+      navigate('/events');
     } catch (error: any) {
-      console.log(JSON.stringify({error}));
+      setError(() => error.message);
     }
   };
-
-  useEffect(() => {
-    if (user) {
-      console.log(JSON.stringify({m:'debug', o:'can we navigate', user}));
-      navigate('/events');
-    }
-  }, [navigate, user]);
 
   return (
     <div className="mx-2">
       <h1>Please Sign In</h1>
-      <Button label="Sign in" onClick={handleLogin} icon="pi pi-sign-in" className="p-button-success p-button-outlined p-button-sm" />
+      {error && <ErrorMessage detail={error} />}
+      <GoogleButton
+        className="p-button-sm"
+        type="dark"
+        onClick={handleGoogleSignIn}
+      />
     </div>
   );
 }

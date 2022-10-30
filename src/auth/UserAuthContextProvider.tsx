@@ -1,36 +1,14 @@
-import { getRedirectResult, onAuthStateChanged, signInWithRedirect, signOut, Unsubscribe, User, UserCredential } from 'firebase/auth';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, Unsubscribe, User, UserCredential } from 'firebase/auth';
 import { ReactNode, useEffect, useState } from 'react';
 import { auth } from '../startup/firebase';
 import { userAuthContext } from './context/user-auth.context';
-import { googleProvider } from './providers/providers';
 
 export default function UserAuthContextProvider({children}: {children: ReactNode}) {
   const [user, setUser] = useState<User|null>(null);
 
-  const logIn = async (): Promise<UserCredential | null> => {
-    try {
-
-      console.log(JSON.stringify({m:'debug', o:'start login...'}));
-      // Start a sign in process for an unauthenticated user.
-      await signInWithRedirect(auth, googleProvider);
-      console.log(JSON.stringify({m:'debug', o:'after signInWithRedirect...'}));
-      // This will trigger a full page redirect away from your app
-      // After returning from the redirect when your app initializes you can obtain the result
-      const result: UserCredential | null = await getRedirectResult(auth);
-      // if (result) {
-      //   // This gives you a Google Access Token.
-      //   const credential: OAuthCredential | null = GoogleAuthProvider.credentialFromResult(result);
-      //   const token: string | undefined = credential?.accessToken;
-      //   // This is the signed-in user
-      //   const user: User = result.user;
-      // }
-      console.log(JSON.stringify({m:'debug', result}));
-
-      return result;
-    } catch (error: any) {
-      console.log(JSON.stringify({error}));
-      throw error;
-    }
+  const logIn = (): Promise<UserCredential> => {
+    const googleProvider = new GoogleAuthProvider();
+    return signInWithPopup(auth, googleProvider);
   };
 
   const logOut = (): Promise<void> => signOut(auth);

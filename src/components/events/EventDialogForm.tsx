@@ -8,6 +8,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { classNames } from 'primereact/utils';
 import { ReactNode, useEffect, useState } from 'react';
 import { firestore } from '../../startup/firebase';
+import ErrorMessage from '../errors/ErrorMessage';
 import { INITIAL_DATA } from './constants/data.constants';
 import { COLOURS, ICONS } from './constants/ui.constants';
 import { EventFormData } from './models/event-form-data';
@@ -15,6 +16,7 @@ import { OrganizerEvent } from './models/organizer-event';
 import './EventDialogForm.css';
 
 export default function EventDialogForm({isVisible, onHide, organizerEvent}: {isVisible: boolean, onHide: () => void, organizerEvent?: OrganizerEvent|null}) {
+  const [error, setError] = useState<string>('Error adding a document');
   const [selectedColour, setSelectedColour] = useState<string>('');
   useEffect(() => {setSelectedColour(() => organizerEvent?.colour ?? '')}, [organizerEvent?.colour]);
   const [selectedIcon, setSelectedIcon] = useState<string>('');
@@ -54,15 +56,13 @@ export default function EventDialogForm({isVisible, onHide, organizerEvent}: {is
 
       try {
         if (!organizerEvent) {
-          const docRef = await addDoc(collection(firestore, 'events'), event);
-          console.log(`Document written with ID: ${docRef.id}`);
+          await addDoc(collection(firestore, 'events'), event);
         } else {
           await setDoc(doc(firestore, 'events', organizerEvent.id), event);
-          console.log(`Document overwritten with ID: ${organizerEvent.id}`);
         }
         resetAndHide();
-      } catch (error) {
-        console.log(`Error adding document: ${error}`);
+      } catch (error: any) {
+        setError(() => `Error adding document: ${error.message}`);
       }
     },
   });
@@ -102,6 +102,7 @@ export default function EventDialogForm({isVisible, onHide, organizerEvent}: {is
         footer={footer}
         onHide={resetAndHide}
       >
+        {error && <ErrorMessage detail={error} />}
         <div className="flex justify-content-center mt-4">
           <form onSubmit={formik.handleSubmit} className="p-fluid">
             <div className="field">
