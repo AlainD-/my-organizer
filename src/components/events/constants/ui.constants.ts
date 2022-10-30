@@ -36,3 +36,6 @@ export const COLOURS: string[] = [
   'FF9800',
   'A31545',
 ];
+
+export const DEFAULT_COLOUR: string = COLOURS[0];
+export const DEFAULT_ICON: string = ICONS[0];

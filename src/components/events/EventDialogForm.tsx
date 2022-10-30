@@ -10,17 +10,17 @@ import { ReactNode, useEffect, useState } from 'react';
 import { firestore } from '../../startup/firebase';
 import ErrorMessage from '../errors/ErrorMessage';
 import { INITIAL_DATA } from './constants/data.constants';
-import { COLOURS, ICONS } from './constants/ui.constants';
+import { COLOURS, DEFAULT_COLOUR, DEFAULT_ICON, ICONS } from './constants/ui.constants';
 import { EventFormData } from './models/event-form-data';
 import { OrganizerEvent } from './models/organizer-event';
 import './EventDialogForm.css';
 
 export default function EventDialogForm({isVisible, onHide, organizerEvent}: {isVisible: boolean, onHide: () => void, organizerEvent?: OrganizerEvent|null}) {
   const [error, setError] = useState<string>('');
-  const [selectedColour, setSelectedColour] = useState<string>('');
-  useEffect(() => {setSelectedColour(() => organizerEvent?.colour ?? '')}, [organizerEvent?.colour]);
-  const [selectedIcon, setSelectedIcon] = useState<string>('');
-  useEffect(() => {setSelectedIcon(() => organizerEvent?.icon ?? '')}, [organizerEvent?.icon]);
+  const [selectedColour, setSelectedColour] = useState<string>(DEFAULT_COLOUR);
+  useEffect(() => {setSelectedColour(() => organizerEvent?.colour ?? DEFAULT_COLOUR)}, [organizerEvent?.colour]);
+  const [selectedIcon, setSelectedIcon] = useState<string>(DEFAULT_ICON);
+  useEffect(() => {setSelectedIcon(() => organizerEvent?.icon ?? DEFAULT_ICON)}, [organizerEvent?.icon]);
 
   const formik = useFormik<EventFormData>({
     initialValues: organizerEvent ? {...organizerEvent, date: organizerEvent.date.toDate()} : INITIAL_DATA,
@@ -69,8 +69,8 @@ export default function EventDialogForm({isVisible, onHide, organizerEvent}: {is
 
   const resetAndHide = (): void => {
     formik.resetForm();
-    setSelectedColour(() => organizerEvent?.colour ?? '')
-    setSelectedIcon(() => organizerEvent?.icon ?? '');
+    setSelectedColour(() => organizerEvent?.colour ?? DEFAULT_COLOUR)
+    setSelectedIcon(() => organizerEvent?.icon ?? DEFAULT_ICON);
     onHide();
   };
 
@@ -112,7 +112,7 @@ export default function EventDialogForm({isVisible, onHide, organizerEvent}: {is
               </div>
 
               <div className="field">
-                <Calendar id="date" name="date" value={formik.values.date} onChange={formik.handleChange} dateFormat="dd/mm/yy" mask="99/99/9999" showIcon showTime className={classNames({ 'p-invalid': isFormFieldValid('date') })} placeholder="Date" />
+                <Calendar id="date" name="date" value={formik.values.date} onChange={formik.handleChange} dateFormat="dd/mm/yy" mask="99/99/9999" showIcon showTime hourFormat="12" className={classNames({ 'p-invalid': isFormFieldValid('date') })} placeholder="Date" />
                 {getFormErrorMessage('date')}
               </div>
 
