@@ -16,6 +16,13 @@ export default function Logout() {
   };
 
   return (
-    <Button label="Sign out" onClick={handleLogout} icon="pi pi-sign-out" className="p-button-secondary p-button-outlined p-button-sm ml-2 " />
+    <>
+      <div className="hidden md:inline-flex">
+        <Button label="Sign out" onClick={handleLogout} icon="pi pi-sign-out" className="p-button-secondary p-button-outlined p-button-sm ml-2 " />
+      </div>
+      <div className="inline-flex md:hidden">
+        <Button onClick={handleLogout} icon="pi pi-sign-out" className="p-button-secondary p-button-outlined p-button-sm ml-2 " />
+      </div>
+    </>
   )
 }

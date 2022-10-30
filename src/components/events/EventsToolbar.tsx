@@ -24,13 +24,13 @@ export default function EventsToolbar({onDisplayModeChanged}: {onDisplayModeChan
   };
 
   const leftContent: ToolbarTemplateType = (
-    <>
+    <div className="flex mb-1">
       <NewEventAction />
-    </>
+    </div>
   );
 
   const rightContent: ToolbarTemplateType = (
-    <>
+    <div className="flex mb-1">
       <SelectButton
         value={displayMode}
         options={displayModeOptions}
@@ -41,7 +41,7 @@ export default function EventsToolbar({onDisplayModeChanged}: {onDisplayModeChan
       />
       <CurrentUser />
       <Logout />
-    </>
+    </div>
   );
 
   return (

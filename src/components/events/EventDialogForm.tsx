@@ -16,7 +16,7 @@ import { OrganizerEvent } from './models/organizer-event';
 import './EventDialogForm.css';
 
 export default function EventDialogForm({isVisible, onHide, organizerEvent}: {isVisible: boolean, onHide: () => void, organizerEvent?: OrganizerEvent|null}) {
-  const [error, setError] = useState<string>('Error adding a document');
+  const [error, setError] = useState<string>('');
   const [selectedColour, setSelectedColour] = useState<string>('');
   useEffect(() => {setSelectedColour(() => organizerEvent?.colour ?? '')}, [organizerEvent?.colour]);
   const [selectedIcon, setSelectedIcon] = useState<string>('');

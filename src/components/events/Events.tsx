@@ -25,7 +25,7 @@ export default function Events({displayMode}: {displayMode: 'compact'|'large'}) 
   };
 
   const customizedContent = (organizerEvent: OrganizerEvent, index: number) => {
-    const rowDirectionClass = index % 2 === 0 ? 'flex-row' : 'flex-row-reverse';
+    const rowDirectionClass = index % 2 === 0 ? 'flex-row' : 'flex-row lg:flex-row-reverse';
     const classes = `flex justify-content-between ${rowDirectionClass}`;
     const title = (
       <div className={classes}>

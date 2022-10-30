@@ -15,7 +15,12 @@ export default function NewEventAction() {
 
   return (
     <>
-      <Button label="Add an event" icon="pi pi-calendar-plus" className="mr-2" onClick={handleNew}/>
+      <div className="hidden md:inline-flex">
+        <Button label="Add an event" icon="pi pi-calendar-plus" className="p-button-sm mr-2" onClick={handleNew}/>
+      </div>
+      <div className="inline-flex md:hidden">
+        <Button icon="pi pi-calendar-plus" className="p-button-sm mr-2" onClick={handleNew}/>
+      </div>
       <NewEventDialog isVisible={isVisible} onHide={handleHide} />
     </>
   );
