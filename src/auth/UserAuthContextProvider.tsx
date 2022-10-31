@@ -8,6 +8,7 @@ export default function UserAuthContextProvider({children}: {children: ReactNode
 
   const logIn = (): Promise<UserCredential> => {
     const googleProvider = new GoogleAuthProvider();
+    googleProvider.setCustomParameters({prompt: 'select_account'});
     return signInWithPopup(auth, googleProvider);
   };
 
