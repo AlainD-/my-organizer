@@ -25,6 +25,7 @@ export default function Events({displayMode}: {displayMode: 'compact'|'large'}) 
 
   const customizedContent = (organizerEvent: OrganizerEvent, index: number) => {
     const rowDirectionClass = index % 2 === 0 ? 'flex-row' : 'flex-row lg:flex-row-reverse';
+    const cardColour = index % 2 === 0 ? 'var(--orange-50)' : 'var(--teal-50)';
     const classes = `flex justify-content-between ${rowDirectionClass}`;
     const title = (
       <div className={classes}>
@@ -33,7 +34,7 @@ export default function Events({displayMode}: {displayMode: 'compact'|'large'}) 
       </div>
     );
     return (
-      <Card title={title} subTitle={formatDate(organizerEvent.date)}>
+      <Card title={title} subTitle={formatDate(organizerEvent.date)} style={{backgroundColor: cardColour}}>
         <p>{organizerEvent.description}</p>
       </Card>
     );
